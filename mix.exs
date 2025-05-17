@@ -1,14 +1,26 @@
 defmodule RadioBrowser.MixProject do
   use Mix.Project
 
+  @version "0.1.0"
+  @source_url "https://github.com/kuku/radio_browser"
+
   def project do
     [
       app: :radio_browser,
-      version: "0.1.0",
-      elixir: "~> 1.19-dev",
+      version: @version,
+      elixir: "~> 1.18",
       start_permanent: Mix.env() == :prod,
       consolidate_protocols: Mix.env() != :dev,
-      deps: deps()
+      deps: deps(),
+
+      # Hex
+      description:
+        "An Elixir client for the Radio Browser API, providing access to a worldwide radio station directory",
+      package: package(),
+
+      # Docs
+      name: "RadioBrowser",
+      docs: docs()
     ]
   end
 
@@ -25,9 +37,28 @@ defmodule RadioBrowser.MixProject do
     [
       {:dns, "~> 2.0"},
       {:req, "~> 0.5"},
-      {:igniter, "~> 0.5", only: [:dev, :test]}
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+      {:ex_doc, "~> 0.36", only: :dev, runtime: false}
+    ]
+  end
+
+  defp package do
+    [
+      maintainers: ["Daniel Kukuła"],
+      licenses: ["Apache-2.0"],
+      links: %{
+        "GitHub" => @source_url,
+        "Radio Browser API" => "https://api.radio-browser.info/"
+      },
+      files: ~w(lib .formatter.exs mix.exs README.md)
+    ]
+  end
+
+  defp docs do
+    [
+      main: "readme",
+      source_url: @source_url,
+      extras: ["README.md"],
+      source_ref: "v#{@version}"
     ]
   end
 end
